@@ -2,9 +2,9 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const path = ("path");
 
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
+const Manager = require("../lib/Manager");
+const Engineer = require("../lib/Engineer");
+const Intern = require("../lib/Intern");
 
 const generateHTML = require("./generateHTML.js");
 
@@ -111,25 +111,28 @@ async function engineerQuestions() {
     name: "name",
     message:"What is the engineers name?",
     validate: nameInput_1 => {
-      if(nameInput_1) {
+      if (nameInput_1) {
+        console.log("hello")
         return true;
-      }else {
+      }
+      else {
         return false;
       }
     },
-    {
+    a:{
       type:"input",
       name: "name",
       message:"what is the engineers employee ID?",
-      validate: nameInput => {
+      validate: nameInput_3 => {
         if (nameInput_3) {
           return true;
-        }else {
+        }
+        else {
           return false;
         }
       }
     },
-    {
+    b:{
       type:"input",
       name:"email",
       message:"what is the engineers email address?",
@@ -143,7 +146,7 @@ async function engineerQuestions() {
         }
       }
     },
-    {
+    c:{
       type:"input",
       name:"github",
       message:"What is your GitHub username?",
@@ -158,7 +161,8 @@ async function engineerQuestions() {
     },
   }
 ]);
-  const {
+
+const {
     name,
     id,
     email,
