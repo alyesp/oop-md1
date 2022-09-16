@@ -1,18 +1,19 @@
-const inquirer = require("inquirer");
 const fs = require("fs");
+const inquirer = require("inquirer");
 const path = ("path");
 
-const Manager = require("../lib/Manager");
-const Engineer = require("../lib/Engineer");
-const Intern = require("../lib/Intern");
+const Manager = require("./Develop/lib/Manager");
+const Engineer = require("./Develop/lib/Engineer");
+const Intern = require("./Develop/lib/Intern");
 
-const generateHTML = require("./generateHTML.js");
+const generateHTML = require("./Develop/src/generateHTML.js");
+const Employee = require("./Develop/lib/Employee");
 
 // Array for team member input
 const teamArray = [];
  //application is init, Team manager prompts start
-function managerQuestions() {
-  return (
+async function managerQuestions() {
+  const managerInput = await 
     inquirer.prompt([{
       type:"input",
       name:"name",
@@ -21,6 +22,7 @@ function managerQuestions() {
         if (nameInput) {
           return true;
         }else {
+          console.log("Please enter the managers name?");
           return false;
         }
       }
@@ -66,7 +68,8 @@ function managerQuestions() {
     },
   ])
   // add new team member info and push it to team array
-  .then(managerInput => {
+  .then((managerInput) => {
+    console.log("can you see me?")
     const {
       name,
       id,
@@ -77,10 +80,9 @@ function managerQuestions() {
 
     teamArray.push(manager);
     console.log(manager);
-    addEmployee()
+    addEmployee();
   })
-  );
-}
+};
 managerQuestions();
 
 //when team member is added, user is prompted to add then engineer or an intern
@@ -118,10 +120,10 @@ async function engineerQuestions() {
       else {
         return false;
       }
-    },
-    a:{
+    }},
+    {
       type:"input",
-      name: "name",
+      name: "id",
       message:"what is the engineers employee ID?",
       validate: nameInput_3 => {
         if (nameInput_3) {
@@ -132,7 +134,7 @@ async function engineerQuestions() {
         }
       }
     },
-    b:{
+    {
       type:"input",
       name:"email",
       message:"what is the engineers email address?",
@@ -141,12 +143,12 @@ async function engineerQuestions() {
         if (valid) {
           return true;
         }else {
-          console.log("Please enter a vail email address.");
+          console.log("Please enter a valid email address.");
           return false;
         }
       }
     },
-    c:{
+    {
       type:"input",
       name:"github",
       message:"What is your GitHub username?",
@@ -159,7 +161,6 @@ async function engineerQuestions() {
         }
       }
     },
-  }
 ]);
 
 const {
@@ -186,6 +187,19 @@ function internQuestions() {
           return true;
         }else {
           console.log ("please enter interns name?");
+          return false;
+        }
+      }
+    },
+    {
+      type:"input",
+      name: "id",
+      message:"what is the Intern employee ID?",
+      validate: nameInput_6 => {
+        if (nameInput_6) {
+          return true;
+        }
+        else {
           return false;
         }
       }
@@ -229,6 +243,7 @@ function internQuestions() {
     const intern = new Intern(name, id, email, school);
     teamArray.push(intern);
     console.log(intern);
+    addEmployee();
   })
 
   );
@@ -236,9 +251,12 @@ function internQuestions() {
 
 //when done, you will exit the app and the html will generate
 function finishBuild() {
-  fs.writeFileSync(
-    path.join(path.resolve(__dirname, "dist"), "index.html"),
+  fs.writeFile(
+    "./Develop/dist/index.html",
     generateHTML(teamArray),
-    Console.log("Your team is completed.")
+    (err) => 
+        err ? console.error(err) : console.log("Your team is completed.")
   );
 }
+
+//finishBuild();

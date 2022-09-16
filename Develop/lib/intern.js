@@ -3,7 +3,7 @@ const Employee = require("./Employee");
 
 // Intern constructor extend to Employee constructor 
 class Intern extends Employee {
-  constructor (name, id, school) {
+  constructor (name, id, email, school) {
     super(name, id, email);
     this.school = school;
   }

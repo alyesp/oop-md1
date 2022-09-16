@@ -7,7 +7,7 @@ describe("Manager", () => {
     test("creates a Manager object", () => {
       const manager = new Manager("Alyssa E", 123, "alyssa.esparza95@gmail.com", 6);
 
-      expect(manager.officeNumber).toEqual(expect.any(number));
+      expect(manager.officeNumber).toEqual(expect.any(Number));
     });
   });
 
